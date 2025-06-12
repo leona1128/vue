@@ -4,10 +4,10 @@ import todoApp from './components/todoApp.vue'
 
 <template>
   <main>
-    <div id="app">
+    <div id="notes">
    
 
-   <todoApp />
+   <todoApp/>
    
  </div>
 
