@@ -2,7 +2,12 @@
 import { ref, computed,onMounted } from 'vue'
 const editingIndex = ref(null); // 正在編輯哪一筆
 const editingText = ref('');    // 編輯中的文字內容
-
+const  props = defineProps({
+  color: {
+    type: String,
+    default: '#fff'
+  }
+});
 const isEditingDate = ref(false);
 const editingDateText = ref('');
 const todos= ref([]);
@@ -88,7 +93,7 @@ function locaDate(){
 </script>
 
 <template>
-  <div class="container">
+  <div class="container"  :style="{ backgroundColor: props.color }">
   <div class="title">
     <h1>我的便利貼</h1>
     <h2>
