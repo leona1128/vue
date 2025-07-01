@@ -1,16 +1,41 @@
-這是一個使用 Vue 3 製作的便利貼應用：</br>
-新增/刪除代辦事項</br>
-編輯事項內容與日期</br>
-自動儲存至瀏覽器（localStorage）</br>
-新增多張便利貼（不同顏色）</br>
-使用技術：</br>
-Vue 3 + <script setup></br>
-Composition API</br>
-LocalStorage 持久化資料</br>
-基本 HTML/CSS 排版</br>
-專案結構：</br>
-src/
-├── components/
-│   └── todoApp.vue        # 單張便利貼元件
-├── App.vue                # 外層容器，可新增多張便利貼
-└── main.js                # Vue 應用啟動點
+# _vuetest
+
+這是一個以 Vue 3 建立的便利貼應用，支援多張便利貼（Sticky Notes），每張便利貼可自訂顏色，並可編輯、勾選完成狀態、刪除事項。資料會儲存在瀏覽器的 localStorage，重整畫面後依然保留使用者內容。
+
+
+
+## Recommended IDE Setup
+
+代辦事項新增與刪除
+點兩下事項可進行編輯
+刪除已完成事項
+點擊日期可修改便利貼日期
+支援新增多張便利貼，每張可設定不同背景色
+資料持久化儲存在 localStorage
+
+## Customize configuration
+
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+### Lint with [ESLint](https://eslint.org/)
+
+```sh
+npm run lint

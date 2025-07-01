@@ -1,5 +1,6 @@
 <script setup>
-import todoApp from './components/todoApp.vue'
+import todoApp from './components/todoApp.vue';
+import addList from './components/addList.vue';
 import {ref} from 'vue';
 const notes = ref([
   { id: 1, color: '#fff' },
@@ -15,18 +16,26 @@ const notes = ref([
         :color="note.color"
       />
     </div>
+  
   </main>
+  <addList/>
+  
  
 
 </template>
 <style scoped>
-main {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+template {
+
   height: 100vh;
   width: 100vw;
   background-color: #e1e1e1d6;
+}
+main{
+  width:100%;
+  height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 </style>

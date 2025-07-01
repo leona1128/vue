@@ -109,6 +109,7 @@ function locaDate(){
   <template v-else>
     <span @click="editdate">{{ date }}</span>
   </template>
+  
 </h2>
   </div>
   <div class="undone">未完成項目：{{ undone }}</div>
