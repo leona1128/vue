@@ -6,12 +6,22 @@ const  props = defineProps({
   color: {
     type: String,
     default: '#fff'
-  }
+  },
+  title:{
+    type: String,
+    default: '便利貼'
+  },
+  id: {
+  type: Number,
+  required: true
+}
+
 });
 const isEditingDate = ref(false);
 const editingDateText = ref('');
 const todos= ref([]);
-const date = ref('2025.04.22');
+const today = new Date().toISOString().split('T')[0];
+const date = ref(today);
 const showInput = ref(false);
 const undone = computed(() => {
   return todos.value.filter(todo => !todo.completed).length;
@@ -20,11 +30,11 @@ const undone = computed(() => {
 
 const newTodo = ref('');
 onMounted(() => {
-  const storedTodos = localStorage.getItem('todos');
+  const storedTodos = localStorage.getItem(`todos-${props.id}`);
   if (storedTodos) {
     todos.value = JSON.parse(storedTodos);
     }
-  const locaDate = localStorage.getItem('date');
+  const locaDate = localStorage.getItem(`date-${props.id}`);
   if (locaDate) {
     date.value = JSON.parse(locaDate);
   }
@@ -34,7 +44,11 @@ const toggleInput = () => {
 
   // 切換顯示狀態，原本是false，點擊後變成true
 }
-const addList = computed(() => (showInput.value ? '🫵🏻' : '➕'))
+const clostInput = () => {
+  showInput.value = false;
+  newTodo.value = '';
+}
+const addList = computed(() => (showInput.value ? '' : '➕'))
 function addTodo() {
   if (newTodo.value.trim() !== '') {
     //trim()移除字符串兩端（開頭和結尾）的空白字符
@@ -48,7 +62,7 @@ function addTodo() {
   }
 }
 function storedTodos() {
-  localStorage.setItem('todos', JSON.stringify(todos.value));
+  localStorage.setItem(`todos-${props.id}`, JSON.stringify(todos.value));
   // 將當前的todos數組存儲到localStorage中
 }
 
@@ -76,17 +90,17 @@ function editdate() {
   // 將日期設置為正在編輯的文本
 }
 function saveDate() {
-  if (editingDateText.value.trim() !== '') {// 確保編輯的文本不為空
-    date.value = editingDateText.value.trim(); // 更新待辦事項的文本
-    isEditingDate.value = false;    // 清除正在編輯的索引
-    editingDateText.value = '';   // 清除編輯中的文本
+  if (editingDateText.value.trim() !== '') {
+    date.value = editingDateText.value.trim(); 
+    isEditingDate.value = false;   
+    editingDateText.value = '';  
     locaDate()
   }
 
 }
 
 function locaDate(){
-  localStorage.setItem('date', JSON.stringify(date.value));
+  localStorage.setItem(`date-${props.id}`, JSON.stringify(date.value));
 }
 
 
@@ -94,8 +108,10 @@ function locaDate(){
 
 <template>
   <div class="container"  :style="{ backgroundColor: props.color }">
+    <div class="text">
   <div class="title">
-    <h1>我的便利貼</h1>
+    <div class="title_name">
+    <h1>{{ props.title }}</h1>
     <h2>
   <template v-if="isEditingDate">
     <input 
@@ -111,6 +127,8 @@ function locaDate(){
   </template>
   
 </h2>
+</div>
+    <div class="delete" @click="$emit('delete', props.id)">✖</div>
   </div>
   <div class="undone">未完成項目：{{ undone }}</div>
 
@@ -139,9 +157,12 @@ function locaDate(){
       </li>
      </ul>
     <!-- 新增事項 -->
+     </div>
      <div class="newListIcon">
+
       <div class="add" @click="toggleInput">{{ addList }}</div>
       <template v-if="showInput">
+        <div class="close" @click="clostInput">X</div>
       <input type="text" v-model="newTodo" placeholder="請輸入代辦事項"@keyup.enter="addTodo"  />
       <button @click="addTodo">新增</button>
       </template>
@@ -162,12 +183,31 @@ function locaDate(){
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     position: relative;
+    overflow: auto;
+}
+.text{
+  position: relative;
+  height: 100%;
+  width: 100%;
+  overflow: auto;
 }
 .title{
   display: flex;
   align-items: flex-end;
   margin-bottom: 10px;
 
+}
+.title_name{
+  display: flex;
+  align-items: flex-end;
+  flex-grow: 1;
+}
+.delete{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  color: #eecda1;
+  filter: drop-shadow(1px, 1px, 5px, #d4d4d4);
 }
 .undone{
   font-size: 12px;
@@ -223,6 +263,24 @@ label{
 }
 .add{
   padding:0 5px;
+
+}
+.close{
+    position: absolute;
+    bottom: 35px;
+    right: 0px;
+    cursor: pointer;
+    font-size: 13px;
+    color: #fff;
+    background-color: #434a4a;
+    width: 17px;
+    height: 17px;
+    line-height: 18px;
+    text-align: center;
+    border-radius: 50%;
+    box-shadow: 1px 1px 5px 1px #d4d4d4;
+
+
 
 }
 .delete{
