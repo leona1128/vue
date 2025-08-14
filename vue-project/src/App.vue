@@ -64,15 +64,26 @@ template{
 }
 #notes{
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+    margin: 20px;
+    /* background-color: #f7bbc0; */
+    z-index: -1;
+    padding: 20px;
+    background-image: url('./assets/img/Plaid.png');
+    background-size: cover;
+
 }
 main{
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  /* background-color: #0d474d; */
+  z-index: -1;
+  position: relative;
+  background-color: #181415;
 }
 
 </style>

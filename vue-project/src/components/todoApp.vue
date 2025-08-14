@@ -107,11 +107,12 @@ function locaDate(){
 </script>
 
 <template>
-  <div class="container"  :style="{ backgroundColor: props.color }">
+  <div class="card"  :style="{ backgroundColor: props.color }">
+    <div class="delete" @click="$emit('delete', props.id)">✖</div>
     <div class="text">
   <div class="title">
     <div class="title_name">
-    <h1>{{ props.title }}</h1>
+    <h1 class="name">{{ props.title }}</h1>
     <h2>
   <template v-if="isEditingDate">
     <input 
@@ -128,7 +129,7 @@ function locaDate(){
   
 </h2>
 </div>
-    <div class="delete" @click="$emit('delete', props.id)">✖</div>
+   
   </div>
   <div class="undone">未完成項目：{{ undone }}</div>
 
@@ -164,26 +165,49 @@ function locaDate(){
       <template v-if="showInput">
         <div class="close" @click="clostInput">X</div>
       <input type="text" v-model="newTodo" placeholder="請輸入代辦事項"@keyup.enter="addTodo"  />
-      <button @click="addTodo">新增</button>
+      <button id="addTodo" @click="addTodo">新增</button>
       </template>
      
      </div>
-   
+   <div class="card_foldUp"></div>
+   <div class="tape"></div>
   </div>
 </template>
 
 <style scoped>
-.container{
+.card{
+  max-width: 600px;
   max-width: 600px;
     max-height: 600px;
     width: 300px;
     height: 300px;
     background-color: #fff;
-    border-radius: 0  0 10px 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    padding: 10px;
     position: relative;
-    overflow: auto;
+}
+.card_foldUp{
+  position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform: rotate(3deg);
+    z-index: -1;
+    /* border-radius: 0 0 0 40px; */
+    background-color: #c7c7c78c;
+ 
+}
+.tape{
+  position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 30px;
+    background-color: #6daff64f;
+    box-shadow: 0px 0px 4px rgb(0 0 0 / 49%);
+    z-index: 100;
 }
 .text{
   position: relative;
@@ -202,11 +226,15 @@ function locaDate(){
   align-items: flex-end;
   flex-grow: 1;
 }
+.name{
+  width: 70%;
+}
+
 .delete{
   position: absolute;
   right: 5px;
   top: 5px;
-  color: #eecda1;
+  color: #9f3414;
   filter: drop-shadow(1px, 1px, 5px, #d4d4d4);
 }
 .undone{
@@ -215,7 +243,7 @@ function locaDate(){
   margin-bottom: 5px;
 }
 h1{
-  font-size: 24px;
+  font-size: 20px;
   padding-right: 10px;
 }
 h2{
@@ -264,6 +292,14 @@ label{
 .add{
   padding:0 5px;
 
+}
+#addTodo{
+  background-color: #6daff6;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
 }
 .close{
     position: absolute;
